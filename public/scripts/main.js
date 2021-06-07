@@ -67,8 +67,8 @@ g_canvas.addEventListener('touchstart', touchstart, true);
 
 let previous_time = new Date().getTime() / 1000;
 
-//window.g_drawables  = [];
-//window.g_updatables = [];
+window.g_drawables  = [];
+window.g_updatables = [];
 
 function animation_loop() {
 	if (g_dirty) {
