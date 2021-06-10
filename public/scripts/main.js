@@ -4,7 +4,7 @@ window.log = function(...args) {
 
 window.g_w   = 1280;
 window.g_h   = 720;
-window.g_spf = 60 / 8;
+window.g_spf = 1 / 8;
 
 let scale = 1;
 let left = 0;
@@ -65,21 +65,30 @@ g_canvas.addEventListener('mousemove' , mousemove , true);
 g_canvas.addEventListener('mousedown' , mousedown , true); 
 g_canvas.addEventListener('touchstart', touchstart, true); 
 
-let previous_time = new Date().getTime() / 1000;
-
 window.g_drawables  = [];
 window.g_updatables = [];
 
+window.g_remove_updatable = function(o) {
+	const i = g_updatables.indexOf(o);
+	if (i !== -1) g_updatables.splice(i, 1);
+};
+
+window.g_remove_drawable = function(o) {
+	const i = g_drawables.indexOf(o);
+	if (i !== -1) g_drawables.splice(i, 1);
+};
+
+let previous_time = new Date().getTime() / 1000;
+
 function animation_loop() {
 	if (g_dirty) {
-		g_draw(ctx);
+		g_drawables.forEach(o => o.draw(ctx));
 		g_dirty = false;
 	}
 	const current_time = new Date().getTime() / 1000;
 	let dt = current_time - previous_time;
 	previous_time = current_time;
-	if (dt > g_spf) dt = g_spf;
-	g_update(dt);
+	g_updatables.slice().forEach(o => o.update(dt));
 	requestAnimationFrame(animation_loop);
 }
 
