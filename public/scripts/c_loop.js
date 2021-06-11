@@ -1,16 +1,29 @@
-export function c_loop(frames, dx = 0, dy = 0) {
+export function c_loop(frames, z_index = 100, dx = 0, dy = 0) {
 	this.frames = frames;
 	this.frame_index = 0;
 	this.elapsed_time = 0;
 	this.dx = dx;
 	this.dy = dy;
+	this.z_index = z_index;
 }
+
+c_loop.prototype.start = function() {
+	g_insert_drawable(this);
+	g_insert_updatable(this);
+};
 
 c_loop.prototype.draw = function(ctx) {
 	this.frames[this.frame_index].draw(ctx, this.dx, this.dy);
 };
 
 c_loop.prototype.update = function(dt) {
+	if (this.frames.length === 0) {
+		if (this.elapsed_time === 0) {
+			this.elapsed_time = dt;
+			g_dirty = true;
+		}
+		return;
+	}
 	this.elapsed_time += dt;
 	if (this.elapsed_time > this.frames[this.frame_index].duration) {
 		this.elapsed_time = 0;

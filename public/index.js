@@ -16,8 +16,8 @@ const go_here = new c_once([
 window.g_touch = p => {
 	go_here.dx = p.x;
 	go_here.dy = p.y;
-	g_drawables.push(go_here);
-	g_updatables.push(go_here);
+	g_insert_drawable(go_here);
+	g_insert_updatable(go_here);
 };
 
 //window.g_draw = function(ctx) {
@@ -25,12 +25,6 @@ window.g_touch = p => {
 //	ctx.drawImage(g_go_here_4, 200, 200);
 //};
 
-const bg = {
-	draw: function(ctx) {
-		ctx.drawImage(g_bg, 0, 0, g_w, g_h, 0, 0, g_w, g_h);
-	}
-};
-
 window.addEventListener('load', () => {
-	g_drawables.push(bg);
+	g_dirty = true;
 });
