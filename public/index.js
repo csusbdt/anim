@@ -14,16 +14,9 @@ const go_here = new c_once([
 ]);
 
 window.g_touch = p => {
-	go_here.dx = p.x;
-	go_here.dy = p.y;
-	g_insert_drawable(go_here);
-	g_insert_updatable(go_here);
+	go_here.offset(p.x, p.y);
+	go_here.start();
 };
-
-//window.g_draw = function(ctx) {
-//	ctx.drawImage(g_bg, 0, 0, g_w, g_h, 0, 0, g_canvas.width, g_canvas.height);
-//	ctx.drawImage(g_go_here_4, 200, 200);
-//};
 
 window.addEventListener('load', () => {
 	g_dirty = true;

@@ -19,6 +19,17 @@ c_once.prototype.stops = function(o) {
 	return this;
 };
 
+c_once.prototype.offset = function(dx, dy) {
+	this.dx = dx;
+	this.dy = dy;
+	return this;
+};
+
+c_once.prototype.start = function() {
+	g_insert_drawable(this);
+	g_insert_updatable(this);
+};
+
 c_once.prototype.draw = function(ctx) {
 	this.frames[this.frame_index].draw(ctx, this.dx, this.dy);
 };
