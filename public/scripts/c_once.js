@@ -1,9 +1,9 @@
-export function c_once(frames, z_index = 100, dx = 0, dy = 0) {
+export function c_once(frames, z_index = 100) {
 	this.frames = frames;
 	this.frame_index = 0;
 	this.elapsed_time = 0;
-	this.dx = dx;
-	this.dy = dy;
+	this.dx = 0;
+	this.dy = 0;
 	this.start_set = [];
 	this.stop_set  = [];
 	this.z_index = z_index;
@@ -19,13 +19,15 @@ c_once.prototype.stops = function(o) {
 	return this;
 };
 
-c_once.prototype.offset = function(dx, dy) {
+// c_once.prototype.offset = function(dx, dy) {
+// 	this.dx = dx;
+// 	this.dy = dy;
+// 	return this;
+// };
+
+c_once.prototype.start = function(dx = 0, dy = 0) {
 	this.dx = dx;
 	this.dy = dy;
-	return this;
-};
-
-c_once.prototype.start = function() {
 	g_insert_drawable(this);
 	g_insert_updatable(this);
 };
@@ -45,7 +47,7 @@ c_once.prototype.update = function(dt) {
 			g_remove_drawable(this);
 			g_remove_updatable(this);
 			this.stop_set.forEach(o => o.stop());
-			this.start_set.forEach(o => o.start());
+			this.start_set.forEach(o => o.start(this.dx, this.dy));
 		}
 	}
 };

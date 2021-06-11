@@ -13,9 +13,10 @@ const go_here = new c_once([
 	new c_frame(g_go_here_4)
 ]);
 
+go_here.starts(new c_loop([new c_frame(g_go_here_4)]));
+
 window.g_touch = p => {
-	go_here.offset(p.x, p.y);
-	go_here.start();
+	go_here.start(p.x, p.y);
 };
 
 window.addEventListener('load', () => {

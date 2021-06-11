@@ -7,7 +7,9 @@ export function c_loop(frames, z_index = 100, dx = 0, dy = 0) {
 	this.z_index = z_index;
 }
 
-c_loop.prototype.start = function() {
+c_loop.prototype.start = function(dx = 0, dy = 0) {
+	this.dx = dx;
+	this.dy = dy;
 	g_insert_drawable(this);
 	g_insert_updatable(this);
 };
