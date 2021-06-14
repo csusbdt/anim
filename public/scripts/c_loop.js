@@ -14,6 +14,11 @@ c_loop.prototype.start = function(dx = 0, dy = 0) {
 	g_insert_updatable(this);
 };
 
+c_loop.prototype.stop = function() {
+	g_remove_drawable(this);
+	g_remove_updatable(this);
+};
+
 c_loop.prototype.draw = function(ctx) {
 	this.frames[this.frame_index].draw(ctx, this.dx, this.dy);
 };

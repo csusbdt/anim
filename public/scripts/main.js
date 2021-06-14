@@ -42,6 +42,27 @@ const canvas_coords = e => {
 	};
 };
 
+// window.g_drawables  = [];
+// window.g_updatables = [];
+// window.g_touchables = [];
+const drawables  = [];
+const updatables = [];
+const touchables = [];
+window.g_selected_touchable = null;
+//window.g_zones         = [];
+//window.g_selected_zone = null;
+//window.g_opening_zone = null;
+//window.g_closing_zone = null;
+//window.g_opened_zone  = null;
+
+const touch = p => {
+	if (g_selected_touchable) {
+		g_selected_touchable.touch(p.x, p.y);
+	} else for (let i = 0; i < touchables.length; ++i) {
+		if (touchables[i].touch(p.x, p.y)) return;
+	}
+};
+
 const mousemove = e => {
 	e.preventDefault();
 	e.stopImmediatePropagation();
@@ -52,45 +73,57 @@ const mousedown = e => {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	g_canvas.style.cursor = 'default';
-	g_touch(canvas_coords(e));
+	touch(canvas_coords(e));
 };
 
 const touchstart = e => {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	g_canvas.style.cursor = 'none';
-	g_touch(canvas_coords(e.changedTouches[0]));
+	touch(canvas_coords(e.changedTouches[0]));
 };
 
 g_canvas.addEventListener('mousemove' , mousemove , true);
 g_canvas.addEventListener('mousedown' , mousedown , true); 
 g_canvas.addEventListener('touchstart', touchstart, true); 
 
-window.g_drawables  = [];
-window.g_updatables = [];
-
-window.g_insert_drawable = function(o) {
-	for (let i = g_drawables.length; i > 0; --i) {
-		if (o.z_order >= g_drawables[i - 1].z_order) {
-			g_drawables.splice(i, 0, o);
+window.g_insert_touchable = function(o) {
+	for (let i = touchables.length; i > 0; --i) {
+		if (o.z_order >= touchables[i - 1].z_order) {
+			touchables.splice(i, 0, o);
 			return;
 		}
 	}
-	g_drawables.unshift(o);
+	touchables.unshift(o);
+};
+
+window.g_insert_drawable = function(o) {
+	for (let i = drawables.length; i > 0; --i) {
+		if (o.z_order >= drawables[i - 1].z_order) {
+			drawables.splice(i, 0, o);
+			return;
+		}
+	}
+	drawables.unshift(o);
 };
 
 window.g_insert_updatable = function(o) {
-	g_updatables.push(o);
+	updatables.push(o);
+};
+
+window.g_remove_touchable = function(o) {
+	const i = touchables.indexOf(o);
+	if (i !== -1) touchables.splice(i, 1);
 };
 
 window.g_remove_drawable = function(o) {
-	const i = g_drawables.indexOf(o);
-	if (i !== -1) g_drawables.splice(i, 1);
+	const i = drawables.indexOf(o);
+	if (i !== -1) drawables.splice(i, 1);
 };
 
 window.g_remove_updatable = function(o) {
-	const i = g_updatables.indexOf(o);
-	if (i !== -1) g_updatables.splice(i, 1);
+	const i = updatables.indexOf(o);
+	if (i !== -1) updatables.splice(i, 1);
 };
 
 let previous_time = new Date().getTime() / 1000;
@@ -100,13 +133,13 @@ function animation_loop() {
 		if (g_bg) {
 			ctx.drawImage(g_bg, 0, 0, g_w, g_h, 0, 0, g_w, g_h);
 		}
-		g_drawables.forEach(o => o.draw(ctx));
+		drawables.forEach(o => o.draw(ctx));
 		g_dirty = false;
 	}
 	const current_time = new Date().getTime() / 1000;
 	let dt = current_time - previous_time;
 	previous_time = current_time;
-	g_updatables.slice().forEach(o => o.update(dt));
+	updatables.slice().forEach(o => o.update(dt));
 	requestAnimationFrame(animation_loop);
 }
 

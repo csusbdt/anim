@@ -1,9 +1,9 @@
-export function c_once(frames, z_index = 100) {
+export function c_once(frames, z_index = 100, dx = 0, dy = 0) {
 	this.frames = frames;
 	this.frame_index = 0;
 	this.elapsed_time = 0;
-	this.dx = 0;
-	this.dy = 0;
+	this.dx = dx;
+	this.dy = dy;
 	this.start_set = [];
 	this.stop_set  = [];
 	this.z_index = z_index;
@@ -47,7 +47,13 @@ c_once.prototype.update = function(dt) {
 			g_remove_drawable(this);
 			g_remove_updatable(this);
 			this.stop_set.forEach(o => o.stop());
-			this.start_set.forEach(o => o.start(this.dx, this.dy));
+			this.start_set.forEach(o => {
+				if (typeof(o) === 'function') {
+					o();
+				} else {
+					o.start(this.dx, this.dy);
+				}
+			});
 		}
 	}
 };
