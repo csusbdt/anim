@@ -5,8 +5,9 @@ const OPENED       = 3;
 const CLOSING_OP   = 4;
 const CLOSING_NOOP = 5;
 
-function opened() {
-	if (this === window) throw new Error("this bound to window");
+function opening_end() {
+	if (this === window) throw new Error("this bound to window"); // assert
+	if (g_selected_touchable !== this) throw new Error("not selected"); // assert
 	if (this.opened_loop) {
 		this.opened_loop.start(this.x, this.y);
 		this.state = OPENED;
@@ -20,12 +21,12 @@ function opened() {
 	}
 }
 
-function op() {
+function closing_end_op() {
 	if (this === window) throw new Error("this bound to window");
 	if (this.state !== CLOSED) throw new Error("not closed");
 	g_selected_touchable = null;
 	if (this.closed_loop) this.closed_loop.start(this.x, this.y);
-	this.state = STOPPED;
+	this.state = CLOSED;
 	this.stop_set.forEach(o => o.stop());
 	this.start_set.forEach(o => {
 		if (typeof(o) === 'function') {
@@ -41,7 +42,7 @@ function noop() {
 	if (this.state !== CLOSED) throw new Error("not closed");
 	g_selected_touchable = null;
 	if (this.closed_loop) this.closed_loop.start(this.x, this.y);
-	this.state = STOPPED;
+	this.state = CLOSED;
 };
 
 export function c_area(
@@ -67,7 +68,7 @@ export function c_area(
 	this.start_set         = [];
 	this.stop_set          = [];
 	this.z_index           = z_index;
-	opening_once.starts(opened.bind(this));
+	opening_once.starts(opening_end.bind(this));
 	if (closing_noop_once) closing_noop_once.starts(noop.bind(this));
 	if (closing_op_once) closing_op_once.starts(op.bind(this));
 	// alternative syntax. need to test.
@@ -106,7 +107,7 @@ c_area.prototype.stop = function() {
 
 c_area.prototype.touch = function(x, y) {
 	if (this.state === CLOSED) {
-		if (g_selected_touchable !== null) throw new Error("not null");
+		if (g_selected_touchable !== null) throw new Error("not null"); // assert
 		if (inside_circle(this.x, this.y, this.r, x, y)) {
 			g_selected_touchable = this;
 			if (this.closed_loop) this.closed_loop.stop();
@@ -116,9 +117,9 @@ c_area.prototype.touch = function(x, y) {
 			return false;
 		}
 	} else if (this.state === OPENING) {
-		if (g_selected_touchable !== this) throw new Error("not selected");
+		if (g_selected_touchable !== this) throw new Error("not selected"); // assert
 	} else if (this.state === OPENED) {
-		if (g_selected_touchable !== this) throw new Error("not selected");
+		if (g_selected_touchable !== this) throw new Error("not selected"); // assert
 		this.opened_loop.stop();
 		if (inside_circle(this.x, this.y, this.r, x, y)) {
 			if (this.closing_op_once) {
@@ -126,7 +127,7 @@ c_area.prototype.touch = function(x, y) {
 				this.state = CLOSING_OP;
 			} else {
 				this.state = CLOSED;
-				op.call(this);
+				closing_end_op.call(this);
 			}
 		} else {
 			if (this.closing_noop_once) {

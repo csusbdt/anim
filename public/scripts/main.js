@@ -101,6 +101,7 @@ window.g_insert_drawable = function(o) {
 	for (let i = drawables.length; i > 0; --i) {
 		if (o.z_order >= drawables[i - 1].z_order) {
 			drawables.splice(i, 0, o);
+			g_dirty = true;
 			return;
 		}
 	}
@@ -118,7 +119,10 @@ window.g_remove_touchable = function(o) {
 
 window.g_remove_drawable = function(o) {
 	const i = drawables.indexOf(o);
-	if (i !== -1) drawables.splice(i, 1);
+	if (i !== -1) {
+		drawables.splice(i, 1);
+		g_dirty = true;
+	}
 };
 
 window.g_remove_updatable = function(o) {
