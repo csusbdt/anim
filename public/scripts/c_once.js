@@ -1,3 +1,5 @@
+import { c_frame  } from './c_frame.js';
+
 export function c_once(frames, z_index = 100, dx = 0, dy = 0) {
 	this.frames = frames;
 	this.frame_index = 0;
@@ -54,4 +56,8 @@ c_once.prototype.update = function(dt) {
 			});
 		}
 	}
+};
+
+window.g_once = function(frames, z_index = 10, dx = 0, dy = 0) {
+	return new c_once(frames, z_index, dx, dy);
 };

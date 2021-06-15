@@ -138,8 +138,7 @@ c_area.prototype.touch = function(x, y) {
 	return true;
 };
 
-window.g_area = function(shapes_a, shapes_b, images, spf = 1/8, dx = 0, dy = 0) {
-	const frames = images.map(image => new c_frame(image, spf));
+window.g_area = function(shapes_a, shapes_b, frames, dx = 0, dy = 0) {
 	const opening_once = new c_once(frames.slice(1, -1), 1000, dx, dy);
 	const opened_loop  = new c_loop(frames.slice(-1), 1000, dx, dy);
 	const closing_once = new c_once(frames.slice(1, -1).reverse(), 1000, dx, dy);

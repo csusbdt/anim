@@ -1,3 +1,5 @@
+import { c_frame  } from './c_frame.js';
+
 export function c_loop(frames, z_index = 100, dx = 0, dy = 0) {
 	this.frames = frames;
 	this.frame_index = 0;
@@ -38,4 +40,8 @@ c_loop.prototype.update = function(dt) {
 			this.frame_index = 0;
 		}
 	}
+};
+
+window.g_loop = function(frames, z_index = 10, dx = 0, dy = 0) {
+	return new c_loop(frames, z_index, dx, dy);
 };
