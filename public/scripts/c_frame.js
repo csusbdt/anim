@@ -1,4 +1,4 @@
-export function c_frame(image, duration = g_spf) {
+export function c_frame(image, duration = 8) {
 	this.image = image;
 	if (duration === undefined) {
 		this.duration = g_spf;

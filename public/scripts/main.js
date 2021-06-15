@@ -2,6 +2,17 @@ window.log = function(...args) {
 	args.forEach(arg => console.log(arg));
 };
 
+window.g_stop_start = function(o) {
+	o.stop_set.forEach(o => o.stop());
+	o.start_set.forEach(o => {
+		if (typeof(o) === 'function') {
+			o();
+		} else {
+			o.start();
+		}
+	});	
+}
+
 window.g_w     = 1280;  // design width
 window.g_h     = 720;   // design height
 window.g_spf   = 1 / 8; // seconds per frame
@@ -42,18 +53,10 @@ const canvas_coords = e => {
 	};
 };
 
-// window.g_drawables  = [];
-// window.g_updatables = [];
-// window.g_touchables = [];
 const drawables  = [];
 const updatables = [];
 const touchables = [];
 window.g_selected_touchable = null;
-//window.g_zones         = [];
-//window.g_selected_zone = null;
-//window.g_opening_zone = null;
-//window.g_closing_zone = null;
-//window.g_opened_zone  = null;
 
 const touch = p => {
 	if (g_selected_touchable) {
@@ -87,17 +90,18 @@ g_canvas.addEventListener('mousemove' , mousemove , true);
 g_canvas.addEventListener('mousedown' , mousedown , true); 
 g_canvas.addEventListener('touchstart', touchstart, true); 
 
-window.g_insert_touchable = function(o) {
-	for (let i = touchables.length; i > 0; --i) {
-		if (o.z_order >= touchables[i - 1].z_order) {
-			touchables.splice(i, 0, o);
-			return;
-		}
-	}
-	touchables.unshift(o);
+window.g_add_touchable = function(o) {
+	touchables.push(o);
+	// for (let i = touchables.length; i > 0; --i) {
+	// 	if (o.z_order >= touchables[i - 1].z_order) {
+	// 		touchables.splice(i, 0, o);
+	// 		return;
+	// 	}
+	// }
+	// touchables.unshift(o);
 };
 
-window.g_insert_drawable = function(o) {
+window.g_add_drawable = function(o) {
 	for (let i = drawables.length; i > 0; --i) {
 		if (o.z_order >= drawables[i - 1].z_order) {
 			drawables.splice(i, 0, o);
@@ -108,13 +112,15 @@ window.g_insert_drawable = function(o) {
 	drawables.unshift(o);
 };
 
-window.g_insert_updatable = function(o) {
+window.g_add_updatable = function(o) {
 	updatables.push(o);
 };
 
 window.g_remove_touchable = function(o) {
 	const i = touchables.indexOf(o);
-	if (i !== -1) touchables.splice(i, 1);
+	if (i !== -1) {
+		touchables.splice(i, 1);
+	}
 };
 
 window.g_remove_drawable = function(o) {
@@ -127,7 +133,9 @@ window.g_remove_drawable = function(o) {
 
 window.g_remove_updatable = function(o) {
 	const i = updatables.indexOf(o);
-	if (i !== -1) updatables.splice(i, 1);
+	if (i !== -1) {
+		updatables.splice(i, 1);
+	}
 };
 
 let previous_time = new Date().getTime() / 1000;

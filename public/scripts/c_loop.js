@@ -8,8 +8,8 @@ export function c_loop(frames, z_index = 100, dx = 0, dy = 0) {
 }
 
 c_loop.prototype.start = function() {
-	g_insert_drawable(this);
-	g_insert_updatable(this);
+	g_add_drawable(this);
+	g_add_updatable(this);
 };
 
 c_loop.prototype.stop = function() {

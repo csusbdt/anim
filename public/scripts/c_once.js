@@ -9,13 +9,13 @@ export function c_once(frames, z_index = 100, dx = 0, dy = 0) {
 	this.z_index = z_index;
 }
 
-c_once.prototype.starts = function(o) {
-	this.start_set.push(o);
+c_once.prototype.starts = function(...os) {
+	os.forEach(o => this.start_set.push(o));
 	return this;
 };
 
-c_once.prototype.stops = function(o) {
-	this.stop_set.push(o);
+c_once.prototype.stops = function(...os) {
+	os.forEach(o => this.stop_set.push(o));
 	return this;
 };
 
@@ -26,8 +26,8 @@ c_once.prototype.stops = function(o) {
 // };
 
 c_once.prototype.start = function() {
-	g_insert_drawable(this);
-	g_insert_updatable(this);
+	g_add_drawable(this);
+	g_add_updatable(this);
 };
 
 c_once.prototype.draw = function(ctx) {
