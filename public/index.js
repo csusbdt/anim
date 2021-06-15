@@ -1,6 +1,6 @@
 document.title = "canvas example";
 
-const area1 = g_area(
+const area1 = g_touch(
 	[g_circle(426, 226,  70)],
 	[g_circle(426, 226, 100)],
 	[
@@ -10,7 +10,7 @@ const area1 = g_area(
 	], 0, 0
 );
 
-const area2 = g_area(
+const area2 = g_touch(
 	[g_circle(200, 425, 160), g_circle(420, 560, 100)],
 	[g_circle(300, 468, 100)],
 	[
@@ -23,7 +23,7 @@ const area2 = g_area(
 	-126, 242
 );
 
-const area3 = g_area(
+const area3 = g_touch(
 	[g_circle(838, 428, 160)],
 	[g_circle(838, 428, 100)],
 	[

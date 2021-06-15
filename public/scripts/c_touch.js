@@ -52,7 +52,7 @@ function closing_end() {
 	}
 };
 
-export function c_area(
+export function c_touch(
 	closed_shapes , 
 	opened_shapes , 
 	closed_loop   , 
@@ -73,31 +73,31 @@ export function c_area(
 	if (closing_once) closing_once.starts(closing_end.bind(this));
 }
 
-c_area.prototype.starts = function(...os) {
+c_touch.prototype.starts = function(...os) {
 	os.forEach(o => this.start_set.push(o));
 	return this;
 };
 
-c_area.prototype.stops = function(...os) {
+c_touch.prototype.stops = function(...os) {
 	os.forEach(o => this.stop_set.push(o));
 	return this;
 };
 
-c_area.prototype.start = function() {
+c_touch.prototype.start = function() {
 	if (this.state !== STOPPED) throw new Error("not stopped");
 	if (this.closed_loop) this.closed_loop.start();
 	this.state = CLOSED;
 	g_add_touchable(this);
 };
 
-c_area.prototype.stop = function() {
+c_touch.prototype.stop = function() {
 	if (this.state !== CLOSED) throw new Error("not closed");
 	if (this.closed_loop) this.closed_loop.stop();
 	this.state = STOPPED;
 	g_remove_touchable(this);
 };
 
-c_area.prototype.touch = function(x, y) {
+c_touch.prototype.touch = function(x, y) {
 	if (this.state === CLOSED) {
 		if (g_selected_touchable !== null) throw new Error("not null"); // assert
 		if (inside(this.closed_shapes, x, y)) {
@@ -138,10 +138,10 @@ c_area.prototype.touch = function(x, y) {
 	return true;
 };
 
-window.g_area = function(shapes_a, shapes_b, frames, dx = 0, dy = 0) {
+window.g_touch = function(shapes_a, shapes_b, frames, dx = 0, dy = 0) {
 	const opening_once = new c_once(frames.slice(1, -1), 1000, dx, dy);
 	const opened_loop  = new c_loop(frames.slice(-1), 1000, dx, dy);
 	const closing_once = new c_once(frames.slice(1, -1).reverse(), 1000, dx, dy);
 	const closed_loop  = new c_loop(frames.slice(0, 1), 1000, dx, dy);
-	return new c_area(shapes_a, shapes_b, closed_loop, opening_once, opened_loop, closing_once);
+	return new c_touch(shapes_a, shapes_b, closed_loop, opening_once, opened_loop, closing_once);
 };
