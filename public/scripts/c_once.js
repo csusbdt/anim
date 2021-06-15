@@ -25,9 +25,7 @@ c_once.prototype.stops = function(o) {
 // 	return this;
 // };
 
-c_once.prototype.start = function(dx = 0, dy = 0) {
-	this.dx = dx;
-	this.dy = dy;
+c_once.prototype.start = function() {
 	g_insert_drawable(this);
 	g_insert_updatable(this);
 };
