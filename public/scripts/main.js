@@ -90,6 +90,12 @@ g_canvas.addEventListener('mousemove' , mousemove , true);
 g_canvas.addEventListener('mousedown' , mousedown , true); 
 g_canvas.addEventListener('touchstart', touchstart, true); 
 
+window.g_clear_touchables = function() {
+	while (touchables.length > 0) {
+		touchables[0].stop();
+	}
+};
+
 window.g_add_touchable = function(o) {
 	touchables.push(o);
 	// for (let i = touchables.length; i > 0; --i) {

@@ -42,13 +42,14 @@ function closing_end() {
 	g_selected_touchable = null;
 	if (this.closed_loop) this.closed_loop.start();
 	if (this.state === CLOSING_OP) {
+		this.state = CLOSED;
+		g_clear_touchables();
 		g_stop_start(this);
 	} else if (this.state === CLOSING_NOOP) {
-		// noop
+		this.state = CLOSED;
 	} else {
 		throw new Error("not closing");
 	}
-	this.state = CLOSED;
 };
 
 export function c_area(
