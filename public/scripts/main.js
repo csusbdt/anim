@@ -60,8 +60,9 @@ window.g_selected_touchable = null;
 
 const touch = p => {
 	if (g_selected_touchable) {
-		g_selected_touchable.touch(p.x, p.y);
-	} else for (let i = 0; i < touchables.length; ++i) {
+		if (g_selected_touchable.touch(p.x, p.y)) return;
+	} 
+	for (let i = 0; i < touchables.length; ++i) {
 		if (touchables[i].touch(p.x, p.y)) return;
 	}
 };

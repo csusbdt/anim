@@ -39,9 +39,9 @@ function opening_end() {
 
 function closing_end() {
 	if (this === window) throw new Error("this bound to window");
-	g_selected_touchable = null;
 	if (this.closed_loop) this.closed_loop.start();
 	if (this.state === CLOSING_OP) {
+		g_selected_touchable = null;
 		this.state = CLOSED;
 		g_clear_touchables();
 		g_stop_start(this);
@@ -119,6 +119,8 @@ c_touch.prototype.touch = function(x, y) {
 		 		this.state = CLOSING_OP;
 			} else {
 				this.state = CLOSING_NOOP;
+				g_selected_touchable = null;
+				return false;
 			}
 		} else {
 			if (inside(this.opened_shapes, x, y)) {
@@ -131,7 +133,7 @@ c_touch.prototype.touch = function(x, y) {
 	} else if (this.state === CLOSING_OP) {
 		// do nothing
 	} else if (this.state === CLOSING_NOOP) {
-		// do nothing
+		return false;
 	} else {
 		throw new Error("unknown state");
 	}
