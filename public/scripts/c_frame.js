@@ -21,3 +21,7 @@ c_frame.prototype.draw = function(ctx, dx = 0, dy = 0) {
 window.g_frame = function(image, duration = 1/8, x = 0, y = 0) {
 	return new c_frame(image, duration, x, y);
 };
+
+window.g_frames = function(images, duration = 1/8, x = 0, y = 0) {
+	return images.map(image => new c_frame(image, duration, x, y));
+};

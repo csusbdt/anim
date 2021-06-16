@@ -2,14 +2,14 @@ import { c_frame  } from './c_frame.js';
 
 export function c_loop(frames, z_index = 100, dx = 0, dy = 0) {
 	this.frames = frames;
-	this.frame_index = 0;
-	this.elapsed_time = 0;
+	this.z_index = z_index;
 	this.dx = dx;
 	this.dy = dy;
-	this.z_index = z_index;
 }
 
 c_loop.prototype.start = function() {
+	this.frame_index  = 0;
+	this.elapsed_time = 0;
 	g_add_drawable(this);
 	g_add_updatable(this);
 };
@@ -24,7 +24,8 @@ c_loop.prototype.draw = function(ctx) {
 };
 
 c_loop.prototype.update = function(dt) {
-	if (this.frames.length === 0) {
+	if (this.frames.length === 1) {
+		// ensure an initial draw after start
 		if (this.elapsed_time === 0) {
 			this.elapsed_time = dt;
 			g_dirty = true;

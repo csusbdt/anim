@@ -138,10 +138,27 @@ c_touch.prototype.touch = function(x, y) {
 	return true;
 };
 
-window.g_touch = function(shapes_a, shapes_b, frames, dx = 0, dy = 0) {
-	const opening_once = new c_once(frames.slice(1, -1), 1000, dx, dy);
-	const opened_loop  = new c_loop(frames.slice(-1), 1000, dx, dy);
-	const closing_once = new c_once(frames.slice(1, -1).reverse(), 1000, dx, dy);
-	const closed_loop  = new c_loop(frames.slice(0, 1), 1000, dx, dy);
-	return new c_touch(shapes_a, shapes_b, closed_loop, opening_once, opened_loop, closing_once);
+window.g_touch = function(
+	closed_shapes , 
+	opened_shapes , 
+	closed_loop   , 
+	opening_once  , 
+	opened_loop   , 
+	closing_once
+) {
+	return new c_touch(
+		closed_shapes, 
+		opened_shapes, 
+		closed_loop, 
+		opening_once, 
+		opened_loop, 
+		closing_once);
 };
+
+// window.g_touch = function(closed_shapes, opened_shapes, frames, dx = 0, dy = 0) {
+// 	const opening_once = new c_once(frames.slice(1, -1), 1000, dx, dy);
+// 	const opened_loop  = new c_loop(frames.slice(-1), 1000, dx, dy);
+// 	const closing_once = new c_once(frames.slice(1, -1).reverse(), 1000, dx, dy);
+// 	const closed_loop  = new c_loop(frames.slice(0, 1), 1000, dx, dy);
+// 	return new c_touch(closed_shapes, opened_shapes, closed_loop, opening_once, opened_loop, closing_once);
+// };

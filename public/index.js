@@ -1,46 +1,77 @@
 document.title = "canvas example";
 
-const area1 = g_touch(
-	[g_circle(426, 226,  70)],
-	[g_circle(426, 226, 100)],
-	[
-		g_frame(g_blank, 1/16),
-		g_frame(g_go1_1, 1/16),
-		g_frame(g_go1_3, 1/16)
-	], 0, 0
+//const closing_frames = opening_frames.slice().reverse();
+
+const closed_shapes_1 = [g_circle(426, 226,  70)];
+const closed_shapes_2 = [g_circle(200, 425, 160), g_circle(420, 560, 100)];
+const closed_shapes_3 = [g_circle(838, 428, 160)];
+
+const opened_shapes_1 = [g_circle(426, 226, 100)];
+const opened_shapes_2 = [g_circle(300, 468, 100)];
+const opened_shapes_3 = [g_circle(838, 428, 100)];
+
+const dx_1 = 0;
+const dy_1 = 0;
+const dx_2 = opened_shapes_2[0].x - opened_shapes_1[0].x;
+const dy_2 = opened_shapes_2[0].y - opened_shapes_1[0].y;
+const dx_3 = opened_shapes_3[0].x - opened_shapes_1[0].x;
+const dy_3 = opened_shapes_3[0].y - opened_shapes_1[0].y;
+
+const opening_frames = g_frames([g_go1_0, g_go1_1, g_go1_2], 1/16);
+const opened_frames  = g_frames([g_go1_3]);
+const closing_frames = opening_frames.slice().reverse();
+
+const t_2_1 = g_touch(
+	closed_shapes_1, opened_shapes_1, 
+	null,
+	g_once(opening_frames, 100, dx_1, dy_1),
+	g_loop(opened_frames , 100, dx_1, dy_1),
+	g_once(closing_frames, 100, dx_1, dy_1)
+);
+const t_3_1 = g_touch(
+	closed_shapes_1, opened_shapes_1, 
+	null,
+	g_once(opening_frames, 100, dx_1, dy_1),
+	g_loop(opened_frames , 100, dx_1, dy_1),
+	g_once(closing_frames, 100, dx_1, dy_1)
 );
 
-const area2 = g_touch(
-	[g_circle(200, 425, 160), g_circle(420, 560, 100)],
-	[g_circle(300, 468, 100)],
-	[
-		g_frame(g_blank, 1/16),
-		g_frame(g_go1_0, 1/16),
-		g_frame(g_go1_1, 1/16),
-		g_frame(g_go1_2, 1/16),
-		g_frame(g_go1_3, 1/16)
-	],
-	-126, 242
+const t_1_2 = g_touch(
+	closed_shapes_2, opened_shapes_2, 
+	null,
+	g_once(opening_frames, 100, dx_2, dy_2),
+	g_loop(opened_frames , 100, dx_2, dy_2),
+	g_once(closing_frames, 100, dx_2, dy_2)
+); 
+const t_3_2 = g_touch(
+	closed_shapes_2, opened_shapes_2, 
+	null,
+	g_once(opening_frames, 100, dx_2, dy_2),
+	g_loop(opened_frames , 100, dx_2, dy_2),
+	g_once(closing_frames, 100, dx_2, dy_2)
+); 
+
+const t_1_3 = g_touch(
+	closed_shapes_3, opened_shapes_3, 
+	null,
+	g_once(opening_frames, 100, dx_3, dy_3),
+	g_loop(opened_frames , 100, dx_3, dy_3),
+	g_once(closing_frames, 100, dx_3, dy_3)
+);
+const t_2_3 = g_touch(
+	closed_shapes_3, opened_shapes_3, 
+	null,
+	g_once(opening_frames, 100, dx_3, dy_3),
+	g_loop(opened_frames , 100, dx_3, dy_3),
+	g_once(closing_frames, 100, dx_3, dy_3)
 );
 
-const area3 = g_touch(
-	[g_circle(838, 428, 160)],
-	[g_circle(838, 428, 100)],
-	[
-		g_frame(g_blank, 1/12),
-		g_frame(g_go1_0, 1/12),
-		g_frame(g_go1_1, 1/12),
-		g_frame(g_go1_3, 1/12)
-	],
-	412, 200
-);
+const idle_frames_1 = [g_frame(g_idle1_0), g_frame(g_idle1_1), g_frame(g_idle1_2)];
+const idle_1 = g_loop(idle_frames_1, 10, dx_1, dy_1);
+const idle_2 = g_loop(idle_frames_1, 10, dx_2, dy_2);
+const idle_3 = g_loop(idle_frames_1, 10, dx_3, dy_3);
 
-const idle_frames = [g_frame(g_idle1_0), g_frame(g_idle1_1), g_frame(g_idle1_2)];
-const idle1 = g_loop(idle_frames, 10,    0,   0);
-const idle2 = g_loop(idle_frames, 10, -126, 242);
-const idle3 = g_loop(idle_frames, 10,  412, 200);
-
-const walk_1_2 = g_once([
+const walk_frames_1_2 = [
 	g_frame(g_idle1_0, 1/8, 128, -4), 
 	g_frame(g_idle1_1, 1/8, 240, -2), 
 	g_frame(g_idle1_2, 1/8, 373, 18), 
@@ -55,16 +86,25 @@ const walk_1_2 = g_once([
 	g_frame(g_idle1_2, 1/8, 3, 313), 
 	g_frame(g_idle1_0, 1/8, -74, 283), 
 	g_frame(g_idle1_1, 1/8, -126, 242) 
-], 10);
+];
+const walk_frames_2_1 = walk_frames_1_2.slice().reverse();
 
-area1.stops(idle2, idle3).starts(area2, area3, idle1);
-area2.stops(idle1, idle3).starts(walk_1_2);
-area3.stops(idle1, idle2).starts(area1, area2, idle3);
-walk_1_2.starts(area1, area3, idle2);
+const walk_1_2 = g_once(walk_frames_1_2, 10);
+const walk_2_1 = g_once(walk_frames_2_1, 10);
+
+t_1_2.stops(idle_1).starts(walk_1_2);
+t_1_3.stops(idle_1).starts(t_3_1, t_3_2, idle_3);
+t_2_1.stops(idle_2).starts(walk_2_1);
+t_2_3.stops(idle_2).starts(t_3_1, t_3_2, idle_3);
+t_3_1.stops(idle_3).starts(t_1_2, t_1_3, idle_1);
+t_3_2.stops(idle_3).starts(t_2_1, t_2_3, idle_2);
+
+walk_1_2.starts(t_2_1, t_2_3, idle_2);
+walk_2_1.starts(t_1_2, t_1_3, idle_1);
 
 window.addEventListener('load', () => {
-	idle1.start();
-	area2.start();
-	area3.start();
+	idle_1.start();
+	t_1_2.start();
+	t_1_3.start();
 	g_dirty = true;
 });

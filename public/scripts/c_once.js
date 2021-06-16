@@ -2,13 +2,11 @@ import { c_frame  } from './c_frame.js';
 
 export function c_once(frames, z_index = 100, dx = 0, dy = 0) {
 	this.frames = frames;
-	this.frame_index = 0;
-	this.elapsed_time = 0;
+	this.z_index = z_index;
 	this.dx = dx;
 	this.dy = dy;
 	this.start_set = [];
 	this.stop_set  = [];
-	this.z_index = z_index;
 }
 
 c_once.prototype.starts = function(...os) {
@@ -21,13 +19,9 @@ c_once.prototype.stops = function(...os) {
 	return this;
 };
 
-// c_once.prototype.offset = function(dx, dy) {
-// 	this.dx = dx;
-// 	this.dy = dy;
-// 	return this;
-// };
-
 c_once.prototype.start = function() {
+	this.frame_index = 0;
+	this.elapsed_time = 0;
 	g_add_drawable(this);
 	g_add_updatable(this);
 };
