@@ -1,7 +1,5 @@
 document.title = "canvas example";
 
-//const closing_frames = opening_frames.slice().reverse();
-
 const closed_shapes_1 = [g_circle(426, 226,  70)];
 const closed_shapes_2 = [g_circle(200, 425, 160), g_circle(420, 560, 100)];
 const closed_shapes_3 = [g_circle(838, 428, 160)];
@@ -89,18 +87,48 @@ const walk_frames_1_2 = [
 ];
 const walk_frames_2_1 = walk_frames_1_2.slice().reverse();
 
+const walk_frames_1_3 = [
+	g_frame(g_idle1_0, 1/8, 65, 36), 
+	g_frame(g_idle1_1, 1/8, 136, 75), 
+	g_frame(g_idle1_2, 1/8, 186, 111), 
+	g_frame(g_idle1_0, 1/8, 263, 143), 
+	g_frame(g_idle1_1, 1/8, 337, 182), 
+	g_frame(g_idle1_2, 1/8, 387, 212), 
+	g_frame(g_idle1_0, 1/8, 412, 202) 
+];
+const walk_frames_3_1 = walk_frames_1_3.slice().reverse();
+
+const walk_frames_2_3 = [
+	g_frame(g_idle1_0, 1/8, -55, 240), 
+	g_frame(g_idle1_1, 1/8, 21, 250), 
+	g_frame(g_idle1_2, 1/8, 96, 245), 
+	g_frame(g_idle1_0, 1/8, 165, 235), 
+	g_frame(g_idle1_1, 1/8, 238, 227), 
+	g_frame(g_idle1_2, 1/8, 325, 222), 
+	g_frame(g_idle1_0, 1/8, 412, 202) 
+];
+const walk_frames_3_2 = walk_frames_2_3.slice().reverse();
+
 const walk_1_2 = g_once(walk_frames_1_2, 10);
 const walk_2_1 = g_once(walk_frames_2_1, 10);
+const walk_1_3 = g_once(walk_frames_1_3, 10);
+const walk_3_1 = g_once(walk_frames_3_1, 10);
+const walk_3_2 = g_once(walk_frames_3_2, 10);
+const walk_2_3 = g_once(walk_frames_2_3, 10);
 
 t_1_2.stops(idle_1).starts(walk_1_2);
-t_1_3.stops(idle_1).starts(t_3_1, t_3_2, idle_3);
+t_1_3.stops(idle_1).starts(walk_1_3);
 t_2_1.stops(idle_2).starts(walk_2_1);
-t_2_3.stops(idle_2).starts(t_3_1, t_3_2, idle_3);
-t_3_1.stops(idle_3).starts(t_1_2, t_1_3, idle_1);
-t_3_2.stops(idle_3).starts(t_2_1, t_2_3, idle_2);
+t_2_3.stops(idle_2).starts(walk_2_3);
+t_3_1.stops(idle_3).starts(walk_3_1);
+t_3_2.stops(idle_3).starts(walk_3_2);
 
 walk_1_2.starts(t_2_1, t_2_3, idle_2);
 walk_2_1.starts(t_1_2, t_1_3, idle_1);
+walk_1_3.starts(t_3_1, t_3_2, idle_3);
+walk_3_1.starts(t_1_2, t_1_3, idle_1);
+walk_2_3.starts(t_3_1, t_3_2, idle_3);
+walk_3_2.starts(t_2_1, t_2_3, idle_2);
 
 window.addEventListener('load', () => {
 	idle_1.start();
