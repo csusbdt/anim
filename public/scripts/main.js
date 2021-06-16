@@ -99,13 +99,6 @@ window.g_clear_touchables = function() {
 
 window.g_add_touchable = function(o) {
 	touchables.push(o);
-	// for (let i = touchables.length; i > 0; --i) {
-	// 	if (o.z_order >= touchables[i - 1].z_order) {
-	// 		touchables.splice(i, 0, o);
-	// 		return;
-	// 	}
-	// }
-	// touchables.unshift(o);
 };
 
 window.g_add_drawable = function(o) {

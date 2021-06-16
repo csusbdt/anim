@@ -1,4 +1,4 @@
-document.title = "canvas example";
+document.title = "test 1";
 
 // shapes
 
@@ -166,8 +166,7 @@ walk_1_3.starts(t_3_1, t_3_2, t_3_door, idle_3);
 walk_3_1.starts(t_1_2, t_1_3, idle_1);
 walk_2_3.starts(t_3_1, t_3_2, t_3_door, idle_3);
 walk_3_2.starts(t_2_1, t_2_3, idle_2);
-walk_3_door.starts(() => { window.location.replace("levels/test_1/") });
-//walk_3_door.starts(() => { window.location.href = "levels/test_1/" });
+walk_3_door.starts(() => { window.location.replace("../../") });
 
 window.addEventListener('load', () => {
 	door.start();
