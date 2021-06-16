@@ -1,6 +1,6 @@
 import { c_frame  } from './c_frame.js';
 
-export function c_loop(frames, z_index = 100, dx = 0, dy = 0) {
+export function c_loop(frames, z_index = 10, dx = 0, dy = 0) {
 	this.frames = frames;
 	this.z_index = z_index;
 	this.dx = dx;

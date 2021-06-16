@@ -18,7 +18,7 @@ window.g_h     = 720;   // design height
 window.g_spf   = 1 / 8; // seconds per frame
 window.g_dirty = true;  // should redraw canvas
 
-const ctx = g_canvas.getContext('2d');
+const ctx = g_canvas.getContext('2d', { alpha: false });
 let scale = 1;
 let left  = 0;
 let top   = 0;
@@ -109,10 +109,10 @@ window.g_add_touchable = function(o) {
 };
 
 window.g_add_drawable = function(o) {
+	g_dirty = true;
 	for (let i = drawables.length; i > 0; --i) {
 		if (o.z_order >= drawables[i - 1].z_order) {
 			drawables.splice(i, 0, o);
-			g_dirty = true;
 			return;
 		}
 	}
