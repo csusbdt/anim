@@ -109,9 +109,10 @@ window.g_add_touchable = function(o) {
 };
 
 window.g_add_drawable = function(o) {
+	if (!o.hasOwnProperty('z_index')) throw new Error(o);
 	g_dirty = true;
 	for (let i = drawables.length; i > 0; --i) {
-		if (o.z_order >= drawables[i - 1].z_order) {
+		if (o.z_index >= drawables[i - 1].z_index) {
 			drawables.splice(i, 0, o);
 			return;
 		}
