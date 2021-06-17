@@ -168,9 +168,27 @@ walk_2_3.starts(t_3_1, t_3_2, t_3_door, idle_3);
 walk_3_2.starts(t_2_1, t_2_3, idle_2);
 walk_3_door.starts(() => { window.location.replace("../../") });
 
-window.addEventListener('load', () => {
+const enter = () => {
 	door.start();
 	idle_1.start();
 	t_1_2.start();
 	t_1_3.start();
+};
+
+const fullscreen_loop = g_loop([g_frame(g_fullscreen)]);
+const t_fullscreen    = g_touch([g_circle(400, 374, 300)]);
+const t_windowed      = g_touch([g_rect(840, 288, 1212, 486)]);
+
+t_fullscreen.stops(fullscreen_loop).starts(enter).starts(() => {
+	if (g_canvas.requestFullscreen) {
+		g_canvas.requestFullscreen();
+	}
+});
+
+t_windowed.stops(fullscreen_loop).starts(enter);
+
+window.addEventListener('load', () => {
+	fullscreen_loop.start();
+	t_fullscreen.start();
+	t_windowed.start();
 });

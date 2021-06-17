@@ -24,14 +24,23 @@ let left  = 0;
 let top   = 0;
 
 function adjust_canvas() {
+	const w = window.innerWidth;
+	const h = window.innerHeight;
+//	const w = screen.availWidth;
+//	const h = screen.availHeight;
+//	const w = Math.min(window.innerWidth, screen.availWidth);
+//	const h = Math.min(window.innerHeight, screen.availHeight);
+//	const w = document.documentElement.clientWidth;
+//	const h = document.documentElement.clientHeight;
+	
 	// Set canvas size.
-	scale = Math.min(1, window.innerWidth / g_w, window.innerHeight / g_h);
+	scale = Math.min(1, w / g_w, h / g_h);
 	g_canvas.width  = scale * g_w;
 	g_canvas.height = scale * g_h;
 
 	// Center canvas in browser window.
-	left = (window.innerWidth  - g_canvas.width ) / 2;
-	top  = (window.innerHeight - g_canvas.height) / 2;
+	left = (w  - g_canvas.width ) / 2;
+	top  = (h - g_canvas.height) / 2;
 	g_canvas.style.left = left;
 	g_canvas.style.top  = top;
 
