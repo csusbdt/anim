@@ -1,5 +1,11 @@
+import fscreen from "./fscreen.js";
+
 window.log = function(...args) {
 	args.forEach(arg => console.log(arg));
+};
+
+window.is_fullscreen = function() {
+	return !!fscreen.fullscreenElement;
 };
 
 window.g_stop_start = function(o) {
@@ -11,7 +17,7 @@ window.g_stop_start = function(o) {
 			o.start();
 		}
 	});	
-}
+};
 
 window.g_w     = 1280;  // design width
 window.g_h     = 720;   // design height
