@@ -89,16 +89,24 @@ const mousedown = e => {
 	touch(canvas_coords(e));
 };
 
-const touchstart = e => {
+// the following touchend and touchmove code needed for fullscreen on chrome
+// see: https://stackoverflow.com/questions/42945378/full-screen-event-on-touch-not-working-on-chrome/42948120
+
+const touchend = e => {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	g_canvas.style.cursor = 'none';
 	touch(canvas_coords(e.changedTouches[0]));
 };
 
-g_canvas.addEventListener('mousemove' , mousemove , true);
-g_canvas.addEventListener('mousedown' , mousedown , true); 
-g_canvas.addEventListener('touchstart', touchstart, true); 
+const touchmove = e => {
+	e.preventDefault();
+}
+
+g_canvas.addEventListener('mousemove', mousemove, true);
+g_canvas.addEventListener('mousedown', mousedown, true); 
+g_canvas.addEventListener('touchend' , touchend , true); 
+g_canvas.addEventListener('touchmove', touchmove, { passive: false }); 
 
 window.g_clear_touchables = function() {
 	while (touchables.length > 0) {
