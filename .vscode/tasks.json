@@ -4,7 +4,7 @@
 		{
 			"label": "webserver",
 			"type": "shell",
-			"command": "../node_modules/http-server/bin/http-server public",
+			"command": "npx http-server public",
 			"problemMatcher": [],
 			"group": {
 				"kind": "build",
