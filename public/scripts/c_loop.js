@@ -44,5 +44,8 @@ c_loop.prototype.update = function(dt) {
 };
 
 window.g_loop = function(frames, z_index = 10, dx = 0, dy = 0) {
+	if (!Array.isArray(frames)) {
+		frames = [frames];
+	}
 	return new c_loop(frames, z_index, dx, dy);
 };

@@ -175,7 +175,7 @@ const enter = () => {
 	t_1_3.start();
 };
 
-const fullscreen_loop = g_loop([g_frame(g_pick_screen)]);
+const fullscreen_loop = g_loop(g_frames(g_pick_screen));
 const t_fullscreen    = g_touch([g_circle(400, 374, 300)]);
 const t_windowed      = g_touch([g_rect(840, 288, 1212, 486)]);
 

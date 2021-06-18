@@ -53,5 +53,8 @@ c_once.prototype.update = function(dt) {
 };
 
 window.g_once = function(frames, z_index = 10, dx = 0, dy = 0) {
+	if (!Array.isArray(frames)) {
+		frames = [frames];
+	}
 	return new c_once(frames, z_index, dx, dy);
 };

@@ -60,6 +60,12 @@ export function c_touch(
 	opened_loop   , 
 	closing_once
 ) {
+	if (closed_shapes && !Array.isArray(closed_shapes)) {
+		closed_shapes = [closed_shapes];
+	}
+	if (opened_shapes && !Array.isArray(opened_shapes)) {
+		opened_shapes = [opened_shapes];
+	}
 	this.closed_shapes = closed_shapes;
 	this.opened_shapes = opened_shapes;
 	this.closed_loop   = closed_loop;
