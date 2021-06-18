@@ -175,14 +175,12 @@ const enter = () => {
 	t_1_3.start();
 };
 
-const fullscreen_loop = g_loop([g_frame(g_fullscreen)]);
+const fullscreen_loop = g_loop([g_frame(g_pick_screen)]);
 const t_fullscreen    = g_touch([g_circle(400, 374, 300)]);
 const t_windowed      = g_touch([g_rect(840, 288, 1212, 486)]);
 
 t_fullscreen.stops(fullscreen_loop).starts(enter).starts(() => {
-	if (g_canvas.requestFullscreen) {
-		g_canvas.requestFullscreen();
-	}
+	g_fullscreen();
 });
 
 t_windowed.stops(fullscreen_loop).starts(enter);

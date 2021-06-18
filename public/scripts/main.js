@@ -4,9 +4,15 @@ window.log = function(...args) {
 	args.forEach(arg => console.log(arg));
 };
 
-window.is_fullscreen = function() {
-	return !!fscreen.fullscreenElement;
-};
+window.g_fullscreen = function() {
+	if (fscreen.fullscreenEnabled) {
+		fscreen.requestFullscreen(g_canvas);
+	}
+} 
+
+// window.is_fullscreen = function() {
+// 	return !!fscreen.fullscreenElement;
+// };
 
 window.g_stop_start = function(o) {
 	o.stop_set.forEach(o => o.stop());
