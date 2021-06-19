@@ -10,7 +10,7 @@ const hi_opened_loop  = g_loop(g_frames(g_hi_5), 11);
 const hi_closing_once = g_once(g_frames([g_hi_4, g_hi_3, g_hi_2, g_hi_1]), 11);
 
 const t_hi = g_touch(
-	g_circle(800, 330, 16),
+	g_circle(800, 330, 32),
 	g_rect(0, 0, 1280, 720),
 	hi_closed_loop,
 	hi_opening_once,

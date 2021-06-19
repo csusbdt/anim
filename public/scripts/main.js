@@ -7,7 +7,10 @@ window.log = function(...args) {
 window.g_fullscreen = function() {
 	if (fscreen.fullscreenEnabled) {
 		fscreen.requestFullscreen(g_canvas);
-	}
+	} 
+//else {
+//		window.scrollTo(0,1); // doesn't seem to work
+//	}
 } 
 
 // window.is_fullscreen = function() {
@@ -36,8 +39,12 @@ let left  = 0;
 let top   = 0;
 
 function adjust_canvas() {
-	const w = window.innerWidth;
-	const h = window.innerHeight;
+	let w = window.innerWidth;
+	let h = window.innerHeight;
+	// if (!fscreen.fullscreenEnabled) {
+	// 	const w = screen.availWidth;
+	// 	const h = screen.availHeight;
+	// }
 //	const w = screen.availWidth;
 //	const h = screen.availHeight;
 //	const w = Math.min(window.innerWidth, screen.availWidth);
