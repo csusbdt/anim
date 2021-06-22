@@ -81,17 +81,22 @@ const canvas_coords = e => {
 	};
 };
 
-const drawables  = [];
-const updatables = [];
-const touchables = [];
-window.g_selected_touchable = null;
+const drawables        = [];
+const updatables       = [];
+window.g_touchables    = [];
+window.g_audio_context = null;
 
 const touch = p => {
-	if (g_selected_touchable) {
-		if (g_selected_touchable.touch(p.x, p.y)) return;
-	} 
-	for (let i = 0; i < touchables.length; ++i) {
-		if (touchables[i].touch(p.x, p.y)) return;
+	if (g_audio_context === null) {
+		g_audio_context = new (window.AudioContext || window.webkitAudioContext)();
+	}
+	// I'm not sure the following is needed but I think it might be 
+	// for phones that suspend audio contexts to reduce battery drain.
+	if (g_audio_context.state === 'suspended') {
+		g_audio_context.resume();
+	}
+	for (let i = 0; i < g_touchables.length; ++i) {
+		if (g_touchables[i].touch(p.x, p.y)) break;
 	}
 };
 
@@ -127,15 +132,15 @@ g_canvas.addEventListener('mousedown', mousedown, true);
 g_canvas.addEventListener('touchend' , touchend , true); 
 g_canvas.addEventListener('touchmove', touchmove, { passive: false }); 
 
-window.g_clear_touchables = function() {
-	while (touchables.length > 0) {
-		touchables[0].stop();
-	}
-};
+// window.g_clear_touchables = function() {
+// 	while (touchables.length > 0) {
+// 		touchables[0].stop();
+// 	}
+// };
 
-window.g_add_touchable = function(o) {
-	touchables.push(o);
-};
+// window.g_add_touchable = function(o) {
+// 	touchables.push(o);
+// };
 
 window.g_add_drawable = function(o) {
 	if (!o.hasOwnProperty('z_index')) throw new Error(o);
