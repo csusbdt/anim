@@ -40,14 +40,7 @@ c_once.prototype.update = function(dt) {
 			this.frame_index = 0;
 			g_remove_drawable(this);
 			g_remove_updatable(this);
-			this.stop_set.forEach(o => o.stop());
-			this.start_set.forEach(o => {
-				if (typeof(o) === 'function') {
-					o();
-				} else {
-					o.start(this.dx, this.dy);
-				}
-			});
+			g_stop_start(this);
 		}
 	}
 };
