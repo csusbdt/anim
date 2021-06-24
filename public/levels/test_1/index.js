@@ -21,14 +21,14 @@ const dy_3 = 202;
 
 // frames
 
-const fullscreen_frames = g_frames(g_pick_screen);
+const fullscreen_frames = g_frames([g_pick_screen]);
 const door_frames       = g_frames([g_door]);
 const opening_x_frames  = g_frames([g_exit_0, g_exit_1]);
 const opened_x_frames   = g_frames([g_exit_2]);
-const closing_x_frames  = exit_opening_frames.slice().reverse();
+const closing_x_frames  = opening_x_frames.slice().reverse();
 const opening_1_frames  = g_frames([g_go1_0, g_go1_1, g_go1_2], 1/16);
 const opened_1_frames   = g_frames([g_go1_3]);
-const closing_1_frames  = opening_frames.slice().reverse();
+const closing_1_frames  = opening_1_frames.slice().reverse();
 const idle_1_frames     = g_frames([g_idle1_0, g_idle1_1, g_idle1_2]);
 
 const walk_1_2_frames = [
@@ -90,7 +90,7 @@ const idle_3_loop     = g_loop(idle_1_frames, 10, dx_3, dy_3);
 const op_1_loop       = g_loop(opened_1_frames, 10);
 const op_2_loop       = g_loop(opened_1_frames, 10, dx_2, dy_2);
 const op_3_loop       = g_loop(opened_1_frames, 10, dx_3, dy_3);
-const op_x_loop       = g_loop(x_opened_frames, 10);
+const op_x_loop       = g_loop(opened_x_frames, 10);
 
 // touches
 
@@ -135,24 +135,24 @@ const noop_3_x   = g_touch(bg_shapes).stops(op_x_loop);
 
 // onces
 
-const sel_2_1_once = g_once(opening_1_frames).starts(op_2_1, switch_2_3, switch_2_x);
-const sel_3_1_once = g_once(opening_1_frames).starts(op_3_1, switch_3_2, switch_3_x);
-const sel_1_2_once = g_once(opening_2_frames).starts(op_1_2, switch_1_3, switch_1_x);
-const sel_3_2_once = g_once(opening_2_frames).starts(op_3_2, switch_3_1, switch_3_x);
-const sel_1_3_once = g_once(opening_3_frames).starts(op_1_3, switch_1_2, switch_1_x);
-const sel_2_3_once = g_once(opening_3_frames).starts(op_2_3, switch_2_1, switch_2_x);
+const sel_2_1_once = g_once(opening_1_frames,    0,    0).starts(op_2_1, switch_2_3, switch_2_x);
+const sel_3_1_once = g_once(opening_1_frames,    0,    0).starts(op_3_1, switch_3_2, switch_3_x);
+const sel_1_2_once = g_once(opening_1_frames, dx_2, dy_2).starts(op_1_2, switch_1_3, switch_1_x);
+const sel_3_2_once = g_once(opening_1_frames, dx_2, dy_2).starts(op_3_2, switch_3_1, switch_3_x);
+const sel_1_3_once = g_once(opening_1_frames, dx_3, dy_3).starts(op_1_3, switch_1_2, switch_1_x);
+const sel_2_3_once = g_once(opening_1_frames, dx_3, dy_3).starts(op_2_3, switch_2_1, switch_2_x);
 const sel_1_x_once = g_once(opening_x_frames).starts(op_1_x, switch_1_2, switch_1_3);
 const sel_2_x_once = g_once(opening_x_frames).starts(op_2_x, switch_2_1, switch_2_3);
 const sel_3_x_once = g_once(opening_x_frames).starts(op_3_x, switch_3_1, switch_3_2);
 
-const walk_2_1_once = g_once(walk_2_1_frames).starts(idle_1, sel_1_2, sel_1_3, sel_1_x);
-const walk_3_1_once = g_once(walk_3_1_frames).starts(idle_1, sel_1_2, sel_1_3, sel_1_x);
-const walk_1_2_once = g_once(walk_2_1_frames).starts(idle_1, sel_1_2, sel_1_3, sel_1_x);
-const walk_3_2_once = g_once(walk_3_1_frames).starts(idle_1, sel_1_2, sel_1_3, sel_1_x);
-const walk_1_3_once = g_once(walk_1_3_frames).starts(idle_3, sel_3_1, sel_3_2, sel_3_x);
-const walk_2_3_once = g_once(walk_2_3_frames).starts(idle_3, sel_3_1, sel_3_2, sel_3_x);
-const op_2_1_once   = g_once(closing_1_frames,   0,     0).starts(walk_2_1_once);
-const op_3_1_once   = g_once(closing_1_frames,   0,     0).starts(walk_3_1_once);
+const walk_2_1_once = g_once(walk_2_1_frames).starts(idle_1_loop, sel_1_2, sel_1_3, sel_1_x);
+const walk_3_1_once = g_once(walk_3_1_frames).starts(idle_1_loop, sel_1_2, sel_1_3, sel_1_x);
+const walk_1_2_once = g_once(walk_2_1_frames).starts(idle_1_loop, sel_1_2, sel_1_3, sel_1_x);
+const walk_3_2_once = g_once(walk_3_1_frames).starts(idle_1_loop, sel_1_2, sel_1_3, sel_1_x);
+const walk_1_3_once = g_once(walk_1_3_frames).starts(idle_3_loop, sel_3_1, sel_3_2, sel_3_x);
+const walk_2_3_once = g_once(walk_2_3_frames).starts(idle_3_loop, sel_3_1, sel_3_2, sel_3_x);
+const op_2_1_once   = g_once(closing_1_frames,    0,    0).starts(walk_2_1_once);
+const op_3_1_once   = g_once(closing_1_frames,    0,    0).starts(walk_3_1_once);
 const op_1_2_once   = g_once(closing_1_frames, dx_2, dy_2).starts(walk_1_2_once);
 const op_3_2_once   = g_once(closing_1_frames, dx_2, dy_2).starts(walk_3_2_once);
 const op_1_3_once   = g_once(closing_1_frames, dx_3, dy_3).starts(walk_1_3_once);
@@ -179,7 +179,7 @@ const noop_3_x_once = g_once(closing_x_frames,    0,    0).starts(sel_3_1, sel_3
 
 const enter = () => {
 	door_loop.start();
-	idle_1.start();
+	idle_1_loop.start();
 	sel_1_2.start();
 	sel_1_3.start();
 	sel_1_x.start();
