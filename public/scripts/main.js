@@ -28,6 +28,10 @@ window.g_stop_start = function(o) {
 	});	
 };
 
+window.g_go_home = function() {
+	window.location.href = "../../";
+};
+
 window.g_w     = 1280;  // design width
 window.g_h     = 720;   // design height
 window.g_spf   = 1 / 8; // seconds per frame

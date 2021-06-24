@@ -24,7 +24,7 @@ window.g_frame = function(image, duration = 1/8, x = 0, y = 0) {
 
 window.g_frames = function(images, duration = 1/8, x = 0, y = 0) {
 	if (!Array.isArray(images)) {
-		images = [images];
+		throw new Error("images not an array");
 	}
 	return images.map(image => new c_frame(image, duration, x, y));
 };

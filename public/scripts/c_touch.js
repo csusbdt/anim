@@ -1,5 +1,7 @@
-function c_touch(shapes) {
+function c_touch(shapes, dx, dy) {
 	this.shapes = shapes;
+	this.dx = dx;
+	this.dy = dy;
 	this.clear_touchables = true;
 	this.start_set = [];
 	this.stop_set  = [];
@@ -21,7 +23,7 @@ c_touch.prototype.start = function() {
 
 c_touch.prototype.touch = function(x, y) {
 	for (let i = 0; i < this.shapes.length; ++i) {
-		if (this.shapes[i].inside(x, y)) {
+		if (this.shapes[i].inside(x - this.dx, y - this.dy)) {
 			if (this.clear_touchables) {
 				g_touchables.length = 0;
 			}
@@ -32,6 +34,6 @@ c_touch.prototype.touch = function(x, y) {
 	return false;
 };
 
-window.g_touch = function(...shapes) {
-	return new c_touch(shapes);
+window.g_touch = function(shapes, dx = 0, dy = 0) {
+	return new c_touch(shapes, dx, dy);
 };
