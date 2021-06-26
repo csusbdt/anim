@@ -188,9 +188,7 @@ let previous_time = new Date().getTime() / 1000;
 
 function animation_loop() {
 	if (g_dirty) {
-		if (g_bg) {
-			ctx.drawImage(g_bg, 0, 0, g_w, g_h, 0, 0, g_w, g_h);
-		}
+		ctx.drawImage(i_bg, 0, 0, g_w, g_h, 0, 0, g_w, g_h);
 		drawables.forEach(o => o.draw(ctx));
 		g_dirty = false;
 	}
