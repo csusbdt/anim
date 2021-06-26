@@ -129,7 +129,7 @@ const walk_1_x = g_once(walk_1_3_frames).starts(walk_3_x);
 const walk_2_x = g_once(walk_2_3_frames).starts(walk_3_x);
 
 const opening_x        = g_once(opening_x_frames).starts(opened_x, op_x, noop_x_1, noop_x_2, noop_x_3, noop_x);
-const closing_op_x     = g_once(closing_x_frames).starts(g_go_home);
+const closing_op_x     = g_once(closing_x_frames).starts(g_delay(.7).stops(idle_x).starts((g_delay(.5).starts(g_go_home))));
 const closing_noop_x_3 = g_once(closing_x_frames).starts(walk_x_3);
 const closing_noop_x_1 = g_once(closing_x_frames).starts(walk_x_1);
 const closing_noop_x_2 = g_once(closing_x_frames).starts(walk_x_2);
