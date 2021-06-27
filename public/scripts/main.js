@@ -8,14 +8,7 @@ window.g_fullscreen = function() {
 	if (fscreen.fullscreenEnabled) {
 		fscreen.requestFullscreen(g_canvas);
 	} 
-//else {
-//		window.scrollTo(0,1); // doesn't seem to work
-//	}
 } 
-
-// window.is_fullscreen = function() {
-// 	return !!fscreen.fullscreenElement;
-// };
 
 window.g_stop_start = function(o) {
 	o.stop_set.forEach(o => o.stop());
@@ -35,7 +28,7 @@ window.g_go_home = function() {
 window.g_w     = 1280;  // design width
 window.g_h     = 720;   // design height
 window.g_spf   = 1 / 8; // seconds per frame
-window.g_dirty = true;  // should redraw canvas
+window.g_dirty = true;  // to redraw canvas
 
 const ctx = g_canvas.getContext('2d', { alpha: false });
 let scale = 1;
@@ -45,16 +38,6 @@ let top   = 0;
 function adjust_canvas() {
 	let w = window.innerWidth;
 	let h = window.innerHeight;
-	// if (!fscreen.fullscreenEnabled) {
-	// 	const w = screen.availWidth;
-	// 	const h = screen.availHeight;
-	// }
-//	const w = screen.availWidth;
-//	const h = screen.availHeight;
-//	const w = Math.min(window.innerWidth, screen.availWidth);
-//	const h = Math.min(window.innerHeight, screen.availHeight);
-//	const w = document.documentElement.clientWidth;
-//	const h = document.documentElement.clientHeight;
 	
 	// Set canvas size.
 	scale = Math.min(1, w / g_w, h / g_h);
@@ -91,11 +74,13 @@ window.g_touchables    = [];
 window.g_audio_context = null;
 
 const touch = p => {
+	// Getting audio context on first touch will enable fastest
+	// possible playout of sound on subsequent touch events.
 	if (g_audio_context === null) {
 		g_audio_context = new (window.AudioContext || window.webkitAudioContext)();
 	}
-	// I'm not sure the following is needed but I think it might be 
-	// for phones that suspend audio contexts to reduce battery drain.
+	// I'm not sure the following is needed but I think phones might 
+	// suspend audio contexts to reduce battery drain.
 	if (g_audio_context.state === 'suspended') {
 		g_audio_context.resume();
 	}

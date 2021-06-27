@@ -1,12 +1,11 @@
-function c_sound(file, volume = 1) {
-	this.file   = file;
-	this.volume = volume;
+function c_sound(audio_element) {
+	this.audio_element = audio_element;
 }
 
 c_sound.prototype.start = function() {
-	log(this.file);
+	this.audio_element.play();
 };
 
-window.g_sound = function(file, volume = 1) {
-	return new c_sound(file, volume);
+window.g_sound = function(audio_element) {
+	return new c_sound(audio_element);
 };

@@ -10,7 +10,9 @@ export function c_once(frames, z_index = 100, dx = 0, dy = 0) {
 }
 
 c_once.prototype.starts = function(...os) {
-	os.forEach(o => this.start_set.push(o));
+	os.forEach(o => {
+		this.start_set.push(o);
+	});
 	return this;
 };
 

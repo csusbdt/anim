@@ -1,7 +1,7 @@
 document.title = "canvas example";
 
-const blop_sound       = g_sound('sfx/blop.mp3');
-const click_sound      = g_sound('sfx/click.mp3');
+const blop_sound       = g_sound(s_blop);
+const click_sound      = g_sound(s_click);
 
 const dx_2 = 560;
 const dy_2 = 200;
@@ -22,6 +22,18 @@ const hi_opened_touch  = g_touch([g_rect(0, 0, 1280, 720)]);
 const red_touch        = g_touch([g_circle(134, 588, 30)]);
 const blue_touch       = g_touch([g_circle(212, 588, 30)]);
 
+const start_preferred_color_touches = () => {
+	const preferred_color = localStorage.getItem('preferred_color');
+	if (preferred_color === 'red') {
+		blue_touch.start();
+	} else if (preferred_color === 'blue') {
+		red_touch.start();
+	} else {
+		red_touch.start();
+		blue_touch.start();
+	}
+};
+
 const touches = [test_1_touch, test_2_touch, hi_closed_touch];
 
 const hi_opening_once  = g_once(g_frames([i_hi_1, i_hi_2, i_hi_3, i_hi_4]), 11);
@@ -32,7 +44,7 @@ test_2_touch   .starts(() => window.location.href = 'levels/test_2/');
 hi_closed_touch.stops(hi_closed_loop).starts(hi_opening_once, blop_sound);
 hi_opened_touch.stops(hi_opened_loop).starts(hi_closing_once, click_sound);
 hi_opening_once.starts(hi_opened_touch, hi_opened_loop);
-hi_closing_once.starts(...touches);
+hi_closing_once.starts(hi_closed_loop, ...touches, start_preferred_color_touches);
 
 red_touch.stops(red_blue_loop, blue_loop).starts(red_loop, blue_touch, ...touches, function() {
 	localStorage.setItem('preferred_color', 'red');
@@ -59,7 +71,4 @@ window.addEventListener('load', e => {
 	test_2_loop.start();
 	hi_closed_loop.start();
 	preferred_color_loop.start();
-//	test_1_touch.start();
-//	test_2_touch.start();
-//	hi_closed_touch.start();
 });
