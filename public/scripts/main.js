@@ -1,14 +1,29 @@
-import fscreen from "./fscreen.js";
-
 window.log = function(...args) {
 	args.forEach(arg => console.log(arg));
 };
 
-window.g_fullscreen = function() {
-	if (fscreen.fullscreenEnabled) {
-		fscreen.requestFullscreen(g_canvas);
-	} 
-} 
+window.g_fullscreen_enabled = function() {
+	return (
+		'requestFullscreen'       in g_canvas ||
+		'webkitRequestFullscreen' in g_canvas ||
+		'mozRequestFullScreen'    in g_canvas ||
+		'msRequestFullscreen'     in g_canvas 
+	);
+};
+
+window.g_request_fullscreen = function() {
+	if ('requestFullscreen' in g_canvas) {
+		g_canvas.requestFullscreen();
+	} else if ('webkitRequestFullscreen' in g_canvas) {
+		g_canvas.webkitRequestFullscreen();
+	} else if ('mozRequestFullScreen' in g_canvas) {
+		g_canvas.mozRequestFullScreen();
+	} else if ('msRequestFullscreen' in g_canvas) {
+		g_canvas.msRequestFullscreen();
+	} else {
+		throw new Error("fullscreen not supported");
+	}
+};
 
 window.g_stop_start = function(o) {
 	o.stop_set.forEach(o => o.stop());

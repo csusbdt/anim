@@ -144,7 +144,7 @@ const enter = () => {
 	sel_1_3.start();
 	sel_1_x.start();
 };
-sel_fullscreen.starts(enter, g_fullscreen);
+sel_fullscreen.starts(enter, g_request_fullscreen);
 sel_windowed.starts(enter);
 
 sel_1_2.starts(walk_1_2);
@@ -169,7 +169,11 @@ noop_x_3.starts(closing_noop_x_3);
 noop_x.starts(closing_noop_x);
 
 window.addEventListener('load', () => {
-	fullscreen.start();
-	sel_fullscreen.start();
-	sel_windowed.start();
+	if (g_fullscreen_enabled()) {
+		fullscreen.start();
+		sel_fullscreen.start();
+		sel_windowed.start();	
+	} else {
+		enter();
+	}
 });

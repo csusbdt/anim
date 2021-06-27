@@ -94,8 +94,8 @@ const op_x_loop       = g_loop(opened_x_frames, 10);
 
 // touches
 
-const fullscreen = g_touch(fullscreen_shapes).stops(fullscreen_loop);
-const windowed   = g_touch(windowed_shapes).stops(fullscreen_loop);
+const sel_fullscreen = g_touch(fullscreen_shapes).stops(fullscreen_loop);
+const sel_windowed   = g_touch(windowed_shapes).stops(fullscreen_loop);
 const sel_2_1    = g_touch(sel_1_shapes);
 const sel_3_1    = g_touch(sel_1_shapes);
 const sel_1_2    = g_touch(sel_2_shapes);
@@ -184,8 +184,8 @@ const enter = () => {
 	sel_1_3.start();
 	sel_1_x.start();
 };
-fullscreen.starts(enter, g_fullscreen);
-windowed.starts(enter);
+sel_fullscreen.starts(enter, g_request_fullscreen);
+sel_windowed.starts(enter);
 
 sel_2_1.starts(sel_2_1_once);
 sel_3_1.starts(sel_3_1_once);
@@ -225,7 +225,11 @@ noop_2_x.starts(noop_2_x_once);
 noop_3_x.starts(noop_3_x_once);
 
 window.addEventListener('load', () => {
-	fullscreen_loop.start();
-	fullscreen.start();
-	windowed.start();
+	if (g_fullscreen_enabled()) {
+		fullscreen_loop.start();
+		sel_fullscreen.start();
+		sel_windowed.start();	
+	} else {
+		enter();
+	}
 });
