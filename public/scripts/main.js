@@ -70,7 +70,7 @@ const canvas_coords = e => {
 
 const drawables        = [];
 const updatables       = [];
-window.g_touchables    = [];
+const touchables       = [];
 window.g_audio_context = null;
 
 const touch = p => {
@@ -84,8 +84,8 @@ const touch = p => {
 	if (g_audio_context.state === 'suspended') {
 		g_audio_context.resume();
 	}
-	for (let i = 0; i < g_touchables.length; ++i) {
-		if (g_touchables[i].touch(p.x, p.y)) break;
+	for (let i = 0; i < touchables.length; ++i) {
+		if (touchables[i].touch(p.x, p.y)) break;
 	}
 };
 
@@ -121,18 +121,14 @@ g_canvas.addEventListener('mousedown', mousedown, true);
 g_canvas.addEventListener('touchend' , touchend , true); 
 g_canvas.addEventListener('touchmove', touchmove, { passive: false }); 
 
-// window.g_clear_touchables = function() {
-// 	while (touchables.length > 0) {
-// 		touchables[0].stop();
-// 	}
-// };
-
-// window.g_add_touchable = function(o) {
-// 	touchables.push(o);
-// };
+window.g_add_touchable = function(o) {
+	if (touchables.includes(o)) return;
+	touchables.push(o);
+};
 
 window.g_add_drawable = function(o) {
-	if (!o.hasOwnProperty('z_index')) throw new Error(o);
+	if (!('z_index' in o)) throw new Error(o);
+	if (drawables.includes(o)) return;
 	g_dirty = true;
 	for (let i = drawables.length; i > 0; --i) {
 		if (o.z_index >= drawables[i - 1].z_index) {
@@ -144,15 +140,20 @@ window.g_add_drawable = function(o) {
 };
 
 window.g_add_updatable = function(o) {
+	if (updatables.includes(o)) return;
 	updatables.push(o);
 };
 
-window.g_remove_touchable = function(o) {
-	const i = touchables.indexOf(o);
-	if (i !== -1) {
-		touchables.splice(i, 1);
-	}
+window.g_clear_touchables = function() {
+	touchables.length = 0;
 };
+
+// window.g_remove_touchable = function(o) {
+// 	const i = touchables.indexOf(o);
+// 	if (i !== -1) {
+// 		touchables.splice(i, 1);
+// 	}
+// };
 
 window.g_remove_drawable = function(o) {
 	const i = drawables.indexOf(o);

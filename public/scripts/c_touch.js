@@ -18,14 +18,14 @@ c_touch.prototype.stops = function(...os) {
 };
 
 c_touch.prototype.start = function() {
-	g_touchables.push(this);
+	g_add_touchable(this);
 };
 
 c_touch.prototype.touch = function(x, y) {
 	for (let i = 0; i < this.shapes.length; ++i) {
 		if (this.shapes[i].inside(x - this.dx, y - this.dy)) {
 			if (this.clear_touchables) {
-				g_touchables.length = 0;
+				g_clear_touchables();
 			}
 			g_stop_start(this);
 			return true;

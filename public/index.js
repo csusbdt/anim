@@ -57,15 +57,12 @@ window.addEventListener('load', e => {
 	const preferred_color = localStorage.getItem('preferred_color');
 	if (preferred_color === 'red') {
 		red_loop.start();
-		blue_touch.start();
 	} else if (preferred_color === 'blue') {
 		blue_loop.start();
-		red_touch.start();
 	} else {
 		red_blue_loop.start();
-		red_touch.start();
-		blue_touch.start();
 	}
+	start_preferred_color_touches();
 	touches.forEach(touch => touch.start());
 	test_1_loop.start();
 	test_2_loop.start();
