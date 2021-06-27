@@ -25,6 +25,10 @@ window.g_go_home = function() {
 	window.location.href = "../../";
 };
 
+window.g_goto = function(url) {
+	return () => window.location.href = url;
+}
+
 window.g_w     = 1280;  // design width
 window.g_h     = 720;   // design height
 window.g_spf   = 1 / 8; // seconds per frame
@@ -147,13 +151,6 @@ window.g_add_updatable = function(o) {
 window.g_clear_touchables = function() {
 	touchables.length = 0;
 };
-
-// window.g_remove_touchable = function(o) {
-// 	const i = touchables.indexOf(o);
-// 	if (i !== -1) {
-// 		touchables.splice(i, 1);
-// 	}
-// };
 
 window.g_remove_drawable = function(o) {
 	const i = drawables.indexOf(o);
