@@ -1,32 +1,34 @@
+import g from './canvasapp.js';
+
 document.title = "canvas example";
 
-const blop_sound  = g_sound(s_blop);
-const click_sound = g_sound(s_click);
-const thud_sound = g_sound(s_thud);
-const tick_sound = g_sound(s_tick);
+const blop_sound  = g.sound(s_blop);
+const click_sound = g.sound(s_click);
+const thud_sound = g.sound(s_thud);
+const tick_sound = g.sound(s_tick);
 
 const dx_2 = 560;
 const dy_2 = 200;
 
-const test_1_loop          = g_loop(g_frames([i_test_1]));
-const test_2_loop          = g_loop(g_frames([i_test_1]), 10, dx_2, dy_2);
-const hi_closed_loop       = g_loop(g_frames([i_hi_0]));
-const hi_opened_loop       = g_loop(g_frames([i_hi_5]), 11);
-const preferred_color_loop = g_loop(g_frames([i_preferred_color]));
-const red_loop             = g_loop(g_frames([i_red]));
-const blue_loop            = g_loop(g_frames([i_blue]));
-const red_blue_loop        = g_loop(g_frames([i_red, i_blue], 1 / 2), 11);
+const test_1_loop          = g.loop(g.frames([i_test_1]));
+const test_2_loop          = g.loop(g.frames([i_test_1]), 10, dx_2, dy_2);
+const hi_closed_loop       = g.loop(g.frames([i_hi_0]));
+const hi_opened_loop       = g.loop(g.frames([i_hi_5]), 11);
+const preferred_color_loop = g.loop(g.frames([i_preferred_color]));
+const red_loop             = g.loop(g.frames([i_red]));
+const blue_loop            = g.loop(g.frames([i_blue]));
+const red_blue_loop        = g.loop(g.frames([i_red, i_blue], 1 / 2), 11);
 
-const opening_hi_once = g_once(g_frames([i_hi_1, i_hi_2, i_hi_3, i_hi_4]), 11);
-const closing_hi_once = g_once(g_frames([i_hi_4, i_hi_3, i_hi_2, i_hi_1]), 11);
+const opening_hi_once = g.once(g.frames([i_hi_1, i_hi_2, i_hi_3, i_hi_4]), 11);
+const closing_hi_once = g.once(g.frames([i_hi_4, i_hi_3, i_hi_2, i_hi_1]), 11);
 
-const test_1_touch   = g_touch([g_rect(74, 263, 474, 463)]);
-const test_2_touch   = g_touch([g_rect(74, 263, 474, 463)], dx_2, dy_2);
-const open_hi_touch  = g_touch([g_circle(800, 330, 32)]);
-const close_hi_touch = g_touch([g_rect(0, 0, 1280, 720)]);
-const red_touch      = g_touch([g_circle(134, 588, 30)]);
-const blue_touch     = g_touch([g_circle(212, 588, 30)]);
-const clear_touch    = g_touch([g_rect(262, 566, 311, 601)]);
+const test_1_touch   = g.touch([g.rect(74, 263, 474, 463)]);
+const test_2_touch   = g.touch([g.rect(74, 263, 474, 463)], dx_2, dy_2);
+const open_hi_touch  = g.touch([g.circle(800, 330, 32)]);
+const close_hi_touch = g.touch([g.rect(0, 0, 1280, 720)]);
+const red_touch      = g.touch([g.circle(134, 588, 30)]);
+const blue_touch     = g.touch([g.circle(212, 588, 30)]);
+const clear_touch    = g.touch([g.rect(262, 566, 311, 601)]);
 
 const start_touches = () => {
 	test_1_touch.start();
@@ -45,8 +47,8 @@ const start_touches = () => {
 	}
 };
 
-test_1_touch.starts(click_sound, g_delay(.5).starts(g_goto('levels/test_1/')));
-test_2_touch.starts(click_sound, g_delay(.5).starts(g_goto('levels/test_2/')));
+test_1_touch.starts(click_sound, g.delay(.5).starts(g.goto('levels/test_1/')));
+test_2_touch.starts(click_sound, g.delay(.5).starts(g.goto('levels/test_2/')));
 open_hi_touch.stops(hi_closed_loop).starts(opening_hi_once, blop_sound);
 close_hi_touch.stops(hi_opened_loop).starts(closing_hi_once, thud_sound);
 opening_hi_once.starts(hi_opened_loop, close_hi_touch);
