@@ -30,6 +30,7 @@
 <body>
 	<!-- required elements: g_canvas and g_bg -->
 	<div id="g_container_div"><canvas id="g_canvas"></canvas></div>
+	
 	<img id="g_bg"              src="images/bg.png"              />
 	<img id="i_hi_0"            src="images/hi_0.png"            />
 	<img id="i_hi_1"            src="images/hi_1.png"            />
@@ -42,11 +43,11 @@
 	<img id="i_red"             src="images/red.png"             />
 	<img id="i_blue"            src="images/blue.png"            />
 
-	<audio preload="auto" id="s_thud"  src="sfx/thud.mp3"></audio>
-	<audio preload="auto" id="s_click" src="sfx/click.mp3"></audio>
-	<audio preload="auto" id="s_blop"  src="sfx/blop.mp3"></audio>
-	<audio preload="auto" id="s_tick"  src="sfx/tick.mp3"></audio>
+	<audio id="s_thud"          src="sfx/thud.mp3" preload="auto"></audio>
+	<audio id="s_click"         src="sfx/click.mp3" preload="auto"></audio>
+	<audio id="s_blop"          src="sfx/blop.mp3" preload="auto"></audio>
+	<audio id="s_tick"          src="sfx/tick.mp3" preload="auto"></audio>
 
-	<script type="module" src="index.js"></script>
+	<script type="module"       src="index.js"></script>
 </body>
 </html>

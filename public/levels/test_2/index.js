@@ -2,6 +2,11 @@ import g from '../../canvasapp.js';
 
 document.title = "test 2";
 
+const blop_sound  = g.sound(s_blop);
+const click_sound = g.sound(s_click);
+const thud_sound = g.sound(s_thud);
+const tick_sound = g.sound(s_tick);
+
 // shapes
 
 const bg_shapes         = [g.rect(0, 0, 1280, 720)];
@@ -92,27 +97,27 @@ const opened_x   = g.loop(opened_x_frames, 10);
 
 // touches 
 
-const sel_fullscreen = g.touch(fullscreen_shapes).stops(fullscreen);
-const sel_windowed   = g.touch(windowed_shapes).stops(fullscreen);
-const sel_2_1        = g.touch(sel_1_shapes).stops(idle_2);
-const sel_3_1        = g.touch(sel_1_shapes).stops(idle_3);
-const sel_x_1        = g.touch(sel_1_shapes).stops(idle_x);
-const sel_1_2        = g.touch(sel_2_shapes).stops(idle_1);
-const sel_3_2        = g.touch(sel_2_shapes).stops(idle_3);
-const sel_x_2        = g.touch(sel_2_shapes).stops(idle_x);
-const sel_1_3        = g.touch(sel_3_shapes).stops(idle_1);
-const sel_2_3        = g.touch(sel_3_shapes).stops(idle_2);
-const sel_x_3        = g.touch(sel_3_shapes).stops(idle_x);
-const sel_1_x        = g.touch(sel_x_shapes).stops(idle_1);
-const sel_2_x        = g.touch(sel_x_shapes).stops(idle_2);
-const sel_3_x        = g.touch(sel_x_shapes).stops(idle_3);
-const sel_x_x        = g.touch(sel_x_shapes);
+const sel_fullscreen = g.touch(fullscreen_shapes).stops(fullscreen).starts(click_sound);
+const sel_windowed   = g.touch(windowed_shapes).stops(fullscreen).starts(click_sound);
+const sel_2_1        = g.touch(sel_1_shapes).stops(idle_2).starts(click_sound);
+const sel_3_1        = g.touch(sel_1_shapes).stops(idle_3).starts(click_sound);
+const sel_x_1        = g.touch(sel_1_shapes).stops(idle_x).starts(click_sound);
+const sel_1_2        = g.touch(sel_2_shapes).stops(idle_1).starts(click_sound);
+const sel_3_2        = g.touch(sel_2_shapes).stops(idle_3).starts(click_sound);
+const sel_x_2        = g.touch(sel_2_shapes).stops(idle_x).starts(click_sound);
+const sel_1_3        = g.touch(sel_3_shapes).stops(idle_1).starts(click_sound);
+const sel_2_3        = g.touch(sel_3_shapes).stops(idle_2).starts(click_sound);
+const sel_x_3        = g.touch(sel_3_shapes).stops(idle_x).starts(click_sound);
+const sel_1_x        = g.touch(sel_x_shapes).stops(idle_1).starts(click_sound);
+const sel_2_x        = g.touch(sel_x_shapes).stops(idle_2).starts(click_sound);
+const sel_3_x        = g.touch(sel_x_shapes).stops(idle_3).starts(click_sound);
+const sel_x_x        = g.touch(sel_x_shapes).starts(blop_sound);
 
-const op_x     = g.touch(op_x_shapes).stops(opened_x);
-const noop_x_1 = g.touch(sel_1_shapes).stops(opened_x, idle_x);
-const noop_x_2 = g.touch(sel_2_shapes).stops(opened_x, idle_x);
-const noop_x_3 = g.touch(sel_3_shapes).stops(opened_x, idle_x);
-const noop_x   = g.touch(bg_shapes).stops(opened_x);
+const op_x     = g.touch(op_x_shapes).stops(opened_x).starts(click_sound);
+const noop_x_1 = g.touch(sel_1_shapes).stops(opened_x, idle_x).starts(click_sound);
+const noop_x_2 = g.touch(sel_2_shapes).stops(opened_x, idle_x).starts(click_sound);
+const noop_x_3 = g.touch(sel_3_shapes).stops(opened_x, idle_x).starts(click_sound);
+const noop_x   = g.touch(bg_shapes).stops(opened_x).starts(thud_sound);
 
 // onces
 
