@@ -4,8 +4,8 @@ document.title = "canvas example";
 
 const blop_sound  = g.sound(s_blop);
 const click_sound = g.sound(s_click);
-const thud_sound = g.sound(s_thud);
-const tick_sound = g.sound(s_tick);
+const thud_sound  = g.sound(s_thud);
+const tick_sound  = g.sound(s_tick);
 
 const dx_2 = 560;
 const dy_2 = 200;

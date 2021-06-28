@@ -159,7 +159,7 @@ const op_3_2_once   = g.once(closing_1_frames, 10, dx_2, dy_2).stops(idle_3_loop
 const op_1_3_once   = g.once(closing_1_frames, 10, dx_3, dy_3).stops(idle_1_loop).starts(walk_1_3_once);
 const op_2_3_once   = g.once(closing_1_frames, 10, dx_3, dy_3).stops(idle_2_loop).starts(walk_2_3_once);
 
-const walk_3_x_once   = g.once(walk_3_x_frames).starts(g.go_home);
+const walk_3_x_once   = g.once(walk_3_x_frames).starts(g.goto('../../'));
 const walk_1_3_x_once = g.once(walk_1_3_frames).starts(walk_3_x_once);
 const walk_2_3_x_once = g.once(walk_2_3_frames).starts(walk_3_x_once);
 const op_1_x_once     = g.once(closing_x_frames).stops(idle_1_loop).starts(walk_1_3_x_once);
