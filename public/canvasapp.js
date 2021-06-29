@@ -4,6 +4,20 @@ const log = function(...args) {
 	args.forEach(arg => console.log(arg));
 };
 
+const fullscreen = function() {
+	if ('fullscreenElement' in document) {
+		return document.fullscreenElement === g_canvas;
+	} else if ('webkitFullscreenElement' in document) {
+		return document.webkitFullscreenElement === g_canvas;
+	} else if ('mozFullScreenElement' in document) {
+		return document.mozFullScreenElement === g_canvas;
+	} else if ('msFullscreenElement' in document) {
+		return document.msFullscreenElement === g_canvas;
+	} else {
+		return false;
+	}
+};
+
 const fullscreen_enabled = function() {
 	return (
 		'requestFullscreen'       in g_canvas ||
@@ -496,7 +510,9 @@ requestAnimationFrame(animation_loop);
 //#region exports
 
 export default {
+	version: '2021-06-29',
 	log: log,
+	fullscreen: fullscreen,
 	fullscreen_enabled: fullscreen_enabled,
 	request_fullscreen: request_fullscreen,
 	goto: goto,
